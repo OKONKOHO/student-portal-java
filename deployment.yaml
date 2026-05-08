@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Damolakstudentportal-deployment 
+  labels:
+    app: Damolakstudentportal
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: Damolakstudentportal
+      template:
+        metadata:
+          labels:
+            app: Damolakstudentportal
+        spec:
+          containers:
+          - name: Damolakstudentportal
+            image: https://533266960414.dkr.ecr.us-east-1.amazonaws.com/javaapp
+            imagePullPolicy: Always
+            ports:
+            - containerPort: 8080  
+
+---
+
+apiVersion: v1
+kind: Service   
+metadata:
+  name: Damolakstudentportal-service
+Labels:
+  app: Damolakstudentportal    
+  spec:
+  type: LoadBalancer
+  ports:  
+  -name: http     
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+    
+  selector:
+    app: Damolakstudentportal
+  
+  
